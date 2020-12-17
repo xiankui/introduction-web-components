@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Introduction Web Components</title>
+	<style>
+		html {
+			font-size: 20px;
+		}
+
+		h2 {
+			font-size: 45px;
+			color: green;
+		}
+
+		p {
+			font-size: 28px;
+		}
+
+		footer {
+			height: 100px;
+		}
+	</style>
+	<script src="./custom-element.js?v=008" defer></script>
+	<script src="./popup-info.js?v=018" defer></script>
+	<script src="./my-shadow.js?v=009"></script>
+	<script src="./using-templates.js?v=006"></script>
+	<script src="./using-slots.js?v=003"></script>
+	<script src="./editable-list.js?v=003" defer></script>
+</head>
+<body>
+	<h1>We call h1 is a html element, and it also could be considered as a basic web component. Why not?</h1>
+	<p>真正意义上的Web Components由三项主要技术组成：</p>
+	<ul>
+		<li>Custom elements（自定义元素）</li>
+		<li>Shadow DOM（影子DOM）</li>
+		<li>HTML templates & slots（HTML模板）</li>
+	</ul>
+
+	<h2>Custom elements（自定义元素）示例：</h2>
+	<popup-info 
+		img="img/web-components.png" 
+		data-text="What's do you think about React, Vue, Angular and WebComponents?"
+	></popup-info>
+
+	<h2>Shadow DOM, open or closed?</h2>
+	<my-shadow-open></my-shadow-open>
+	<my-shadow-closed></my-shadow-closed>
+	<div id="directly-shadow"></div>
+	<p>The conclusion is keep it mode open. someone always can get your shadow dom if they want.</p>
+
+	<h2>使用 templates</h2>
+
+	<my-element-from-template></my-element-from-template>
+
+	<template id="my-paragraph-template">
+	  <style>
+	    p {
+	      color: white;
+	      background-color: #666;
+	      padding: 5px;
+	    }
+	  </style>
+	  <p>My paragraph</p>
+	</template>
+	<my-paragraph></my-paragraph>
+
+	<h2>使用 slots</h2>
+	<!-- template with slot make it dynamicly -->
+	<template id="element-details-template">
+	  <style>
+	  details {font-family: "Open Sans Light",Helvetica,Arial}
+	  .name {font-weight: bold; color: #217ac0; font-size: 120%}
+	  h4 { margin: 10px 0 -8px 0; }
+	  h4 span { background: #217ac0; padding: 2px 6px 2px 6px }
+	  h4 span { border: 1px solid #cee9f9; border-radius: 4px }
+	  h4 span { color: white }
+	  .attributes { margin-left: 22px; font-size: 90% }
+	  .attributes p { margin-left: 16px; font-style: italic }
+	  
+	  ::slotted(span) {
+	  	color: blue;
+	  }
+	  </style>
+	  <details>
+	    <summary>
+	      <span>
+	        <code class="name">&lt;<slot name="element-name">NEED NAME</slot>&gt;</code>
+	        <i class="desc"><slot name="description">NEED DESCRIPTION</slot></i>
+	      </span>
+	    </summary>
+	    <div class="attributes">
+	      <h4><span>Attributes</span></h4>
+	      <slot name="attributes"><p>None</p></slot>
+	    </div>
+	  </details>
+	  <hr>
+	</template>
+
+	<element-details></element-details>
+
+	<element-details>
+		<span slot="element-name">Details Name</span>
+		<span slot="description">My Description</span>
+		<ul slot="attributes">
+			<li>Rich</li>
+			<li>Handsome</li>
+			<li>Tall</li>
+		</ul>
+	</element-details>
+
+	<h2>Web components lifecycle</h2>
+	<!-- using life cycle -->
+	<editable-list
+	    title="My Editable List"
+	    list-items="['First Item', 'Second Item']"
+	    add-item-text="Add New List Item:"
+	></editable-list>
+
+	<footer></footer>
+</body>
+</html>
